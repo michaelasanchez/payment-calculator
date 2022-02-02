@@ -38,15 +38,18 @@ namespace Payment.Api.Services
 
             var remainingPrincipal = presentValue;
 
-            for (int i = 0; i < remainingPeriods && remainingPrincipal >= 0; i++)
+            for (int i = 0; i < remainingPeriods && remainingPrincipal > 0; i++)
             {
                 var periodInterest = remainingPrincipal * periodRate;
+                var totalPayment = payment - periodInterest + (overpayment ?? 0);
+
+                totalPayment = Math.Min(totalPayment, remainingPrincipal);
 
                 totalInterest += periodInterest;
-                totalPaid += payment;
+                totalPaid += totalPayment;
                 totalPeriods++;
 
-                remainingPrincipal -= payment - periodInterest + (overpayment ?? 0);
+                remainingPrincipal -= totalPayment;
             }
 
             return new Loan()
@@ -54,7 +57,7 @@ namespace Payment.Api.Services
                 Principal = presentValue,
                 Rate = annualRate,
                 TotalInterest = Math.Round(totalInterest, 2),
-                TotalPaid = Math.Round(totalPaid, 2),
+                TotalPaid = Math.Round(totalPaid + totalInterest, 2),
                 TotalPeriods = totalPeriods
             };
         }

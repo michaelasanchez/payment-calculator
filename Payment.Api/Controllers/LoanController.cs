@@ -15,12 +15,12 @@ namespace Payment.Api.Controllers
             _loanService = loanService;
         }
 
-        [HttpPost(Name = "Calculate")]
-        public ActionResult<Loan> Calculate(decimal presentValue, decimal annualRate, int remainingPeriods, decimal? overpayment)
+        [HttpPost]
+        public ActionResult<Loan> Calculate(decimal principal, decimal annualRate, int remainingPeriods, decimal? overpayment)
         {
             try
             {
-                var loan = _loanService.Calculate(presentValue, annualRate, remainingPeriods, overpayment);
+                var loan = _loanService.Calculate(principal, annualRate, remainingPeriods, overpayment);
 
                 return Ok(loan);
             }

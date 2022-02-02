@@ -4,6 +4,6 @@ namespace Payment.Api.Validators.Interfaces
 {
     public interface ILoanValidator
     {
-        ValidationResult ValidateAgainstInvalidLoanCalculation(decimal presentValue, decimal annualRate, int remainingPeriods, decimal? overpayment);
+        ValidationResult ValidateAgainstInvalidLoanCalculation(decimal principal, decimal annualRate, int remainingPeriods, decimal? overpayment);
     }
 }
