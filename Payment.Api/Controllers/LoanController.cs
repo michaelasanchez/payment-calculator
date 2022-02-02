@@ -8,20 +8,27 @@ namespace Payment.Api.Controllers
     [ApiController]
     public class LoanController : ControllerBase
     {
-        private readonly ILogger<LoanController> _logger;
-
         private readonly ILoanService _loanService;
 
-        public LoanController(ILogger<LoanController> logger, ILoanService loanService)
+        public LoanController(ILoanService loanService)
         {
-            _logger = logger;
             _loanService = loanService;
         }
 
         [HttpPost(Name = "Calculate")]
-        public Loan Calculate(double presentValue, double annualRate, double remainingPeriods)
+        public ActionResult<Loan> Calculate(decimal presentValue, decimal annualRate, int remainingPeriods, decimal? overpayment)
         {
-            return _loanService.Calculate(presentValue, annualRate, remainingPeriods);
+            try
+            {
+                var loan = _loanService.Calculate(presentValue, annualRate, remainingPeriods, overpayment);
+
+                return Ok(loan);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

@@ -4,7 +4,9 @@
     {
         public decimal Principal { get; set; }
         public decimal Rate { get; set; }
-        public decimal? Term { get; set; }
 
+        public decimal TotalInterest { get; set; }
+        public decimal TotalPaid { get; set; }
+        public int TotalPeriods { get; set; }
     }
 }

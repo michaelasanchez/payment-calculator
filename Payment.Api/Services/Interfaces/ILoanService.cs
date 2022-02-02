@@ -4,6 +4,6 @@ namespace Payment.Api.Services.Interfaces
 {
     public interface ILoanService
     {
-        Loan Calculate(double presentValue, double annualRate, double remainingPeriods);
+        Loan Calculate(decimal presentValue, decimal annualRate, int remainingPeriods, decimal? overpayment);
     }
 }

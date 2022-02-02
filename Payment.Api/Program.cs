@@ -1,5 +1,7 @@
 using Payment.Api.Services;
 using Payment.Api.Services.Interfaces;
+using Payment.Api.Validators;
+using Payment.Api.Validators.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ILoanService, LoanService>();
+builder.Services.AddScoped<ILoanValidator, LoanValidator>();
 
 var app = builder.Build();
 
