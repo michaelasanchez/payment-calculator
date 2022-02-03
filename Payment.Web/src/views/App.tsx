@@ -1,8 +1,11 @@
+import { map } from 'lodash';
 import * as React from 'react';
+import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { LoanForm } from '.';
-import { Navbar } from '../components';
-import { LoanRequest } from '../models';
+import { MemoizedLoanCard, Navbar } from '../components';
+import { LoanRequest, LoanResult } from '../models';
+import { config } from '../shared';
 
 const DefaultLoanRequest = () => ({
   principal: 10000,
@@ -10,12 +13,17 @@ const DefaultLoanRequest = () => ({
   remainingPeriods: 12,
 });
 
+const formRequestUrl = (loanRequest: LoanRequest): string =>
+  `${config.API_URL}Loan?principal=${loanRequest.principal}&annualRate=${loanRequest.annualRate}&remainingPeriods=${loanRequest.remainingPeriods}`;
+
 interface AppProps {}
 
 export const App: React.FC<AppProps> = ({}) => {
-  const [loanRequest, setLoanRequest] = React.useState<LoanRequest>(
+  const [loanRequest, setLoanRequest] = useState<LoanRequest>(
     DefaultLoanRequest()
   );
+
+  const [loanResults, setLoanResults] = useState<LoanResult[]>([]);
 
   const handleUpdateRequest = (updated: Partial<LoanRequest>) => {
     setLoanRequest({ ...loanRequest, ...updated });
@@ -24,12 +32,13 @@ export const App: React.FC<AppProps> = ({}) => {
   const handleSubmitRequest = () => {
     console.log(loanRequest);
 
-    fetch(
-      'https://localhost:7124/api/Loan?principal=1000&annualRate=5&remainingPeriods=12',
-      {
-        method: 'POST',
-      }
-    ).then((data) => console.log(data));
+    fetch(formRequestUrl(loanRequest), {
+      method: 'POST',
+    })
+      .then((data) => data.json())
+      .then((result: LoanResult) => {
+        setLoanResults([...loanResults, result]);
+      });
   };
 
   return (
@@ -46,7 +55,11 @@ export const App: React.FC<AppProps> = ({}) => {
                 submitRequest={handleSubmitRequest}
               />
             </Col>
-            <Col sm={12} md={6}></Col>
+            <Col sm={12} md={6}>
+              {map(loanResults, (l, i) => (
+                <MemoizedLoanCard key={i} loan={l} />
+              ))}
+            </Col>
           </Row>
         </Container>
       </main>

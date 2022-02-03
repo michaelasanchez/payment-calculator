@@ -1,0 +1,9 @@
+.card {
+  margin-bottom: 1rem;
+  padding: 0.5em 0;
+
+  .card-line {
+    display: flex;
+    justify-content: space-between;
+  }
+}
