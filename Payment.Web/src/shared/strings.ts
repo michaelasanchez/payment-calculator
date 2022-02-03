@@ -1,7 +1,7 @@
 export const strings = {
   forms: {
     helperText: {
-      annualRate: 'Interest rate percentage',
+      annualRate: 'Annual interest rate percentage',
       principal: 'Current or total loan amount',
       remainingPeriods: 'Number of remaining payment periods (in months)',
     },
