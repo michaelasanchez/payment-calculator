@@ -20,7 +20,7 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
           <Form.Control
             type="number"
             size="lg"
-            value={loanRequest.principal}
+            value={loanRequest.principal || ''}
             onChange={(e) =>
               updateRequest({ principal: parseFloat(e.target.value) })
             }
@@ -32,7 +32,7 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
           <Form.Control
             type="number"
             size="lg"
-            value={loanRequest.annualRate}
+            value={loanRequest.annualRate || ''}
             onChange={(e) =>
               updateRequest({ annualRate: parseFloat(e.target.value) })
             }
@@ -44,7 +44,7 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
           <Form.Control
             type="number"
             size="lg"
-            value={loanRequest.remainingPeriods}
+            value={loanRequest.remainingPeriods || ''}
             onChange={(e) =>
               updateRequest({ remainingPeriods: parseFloat(e.target.value) })
             }

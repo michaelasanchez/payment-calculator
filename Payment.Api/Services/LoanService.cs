@@ -56,6 +56,7 @@ namespace Payment.Api.Services
             {
                 Principal = presentValue,
                 Rate = annualRate,
+                Overpayment = overpayment ?? 0,
                 TotalInterest = Math.Round(totalInterest, 2),
                 TotalPaid = Math.Round(totalPaid + totalInterest, 2),
                 TotalPeriods = totalPeriods

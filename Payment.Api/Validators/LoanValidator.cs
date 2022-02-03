@@ -11,17 +11,17 @@ namespace Payment.Api.Validators
         {
             var result = new ValidationResult();
 
-            if (principal < 0)
+            if (principal <= 0)
             {
                 result.Errors.Add("Principal must be a positive value.");
             }
 
-            if (annualRate < 0)
+            if (annualRate <= 0)
             {
                 result.Errors.Add("Annual rate must be a positive value.");
             }
 
-            if (remainingPeriods < 0)
+            if (remainingPeriods < 1)
             {
                 result.Errors.Add("Remaining Periods must be a positive whole number.");
             }

@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { findIndex, map } from 'lodash';
 import * as React from 'react';
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -13,8 +13,15 @@ const DefaultLoanRequest = () => ({
   remainingPeriods: 12,
 });
 
-const formRequestUrl = (loanRequest: LoanRequest): string =>
-  `${config.API_URL}Loan?principal=${loanRequest.principal}&annualRate=${loanRequest.annualRate}&remainingPeriods=${loanRequest.remainingPeriods}`;
+const formRequestUrl = (loanRequest: LoanRequest): string => {
+  let requestUrl = `${config.API_URL}Loan?principal=${loanRequest.principal}&annualRate=${loanRequest.annualRate}&remainingPeriods=${loanRequest.remainingPeriods}`;
+
+  if (!!loanRequest.overpayment) {
+    requestUrl += `&overpayment=${loanRequest.overpayment}`;
+  }
+
+  return requestUrl;
+};
 
 interface AppProps {}
 
@@ -22,8 +29,8 @@ export const App: React.FC<AppProps> = ({}) => {
   const [loanRequest, setLoanRequest] = useState<LoanRequest>(
     DefaultLoanRequest()
   );
-
   const [loanResults, setLoanResults] = useState<LoanResult[]>([]);
+  const [resultCount, setResultCount] = useState<number>(1);
 
   const handleUpdateRequest = (updated: Partial<LoanRequest>) => {
     setLoanRequest({ ...loanRequest, ...updated });
@@ -35,8 +42,20 @@ export const App: React.FC<AppProps> = ({}) => {
     })
       .then((data) => data.json())
       .then((result: LoanResult) => {
-        setLoanResults([...loanResults, result]);
-      });
+        setLoanResults([...loanResults, { ...result, resultNum: resultCount }]);
+        console.log(resultCount);
+        setResultCount((c) => c + 1);
+      })
+      .catch(() => alert('Whoops! Something went wrong'));
+  };
+
+  const handleRemoveResult = (resultNum: number) => {
+    console.log('here', resultNum);
+    const index = findIndex(loanResults, (l) => l.resultNum == resultNum);
+    console.log('INDEX', index);
+
+    loanResults.splice(index, 1);
+    setLoanResults([...loanResults]);
   };
 
   return (
@@ -57,10 +76,12 @@ export const App: React.FC<AppProps> = ({}) => {
               {loanResults.length > 0 && <h4>{strings.results}</h4>}
               <div className="result-container">
                 {map(loanResults, (l, i) => (
-                  <>
-                    <span className="font-weight-light text-muted">#{i}</span>
-                    <MemoizedLoanCard key={i} loan={l} />
-                  </>
+                  <div key={i}>
+                    <span className="font-weight-light text-muted">
+                      #{l.resultNum}
+                    </span>
+                    <MemoizedLoanCard loan={l} remove={handleRemoveResult} />
+                  </div>
                 ))}
               </div>
             </Col>
