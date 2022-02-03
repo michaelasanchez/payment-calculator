@@ -23,6 +23,13 @@ export const App: React.FC<AppProps> = ({}) => {
 
   const handleSubmitRequest = () => {
     console.log(loanRequest);
+
+    fetch(
+      'https://localhost:7124/api/Loan?principal=1000&annualRate=5&remainingPeriods=12',
+      {
+        method: 'POST',
+      }
+    ).then((data) => console.log(data));
   };
 
   return (

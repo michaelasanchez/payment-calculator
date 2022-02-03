@@ -5,6 +5,17 @@ using Payment.Api.Validators.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(
+		builder =>
+		{
+			builder.WithOrigins("http://localhost:9000")
+				.AllowAnyHeader()
+				.AllowAnyMethod();
+		});
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -25,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
