@@ -9,7 +9,7 @@ var ENV = process.env.npm_lifecycle_event;
 // var isTest = ENV === 'test' || ENV === 'test-watch';
 var isProd = ENV === 'build';
 
-const pageTitle = 'Template';
+const pageTitle = 'Payment Calculator';
 
 module.exports = function makeWebpackConfig() {
 
@@ -27,20 +27,9 @@ module.exports = function makeWebpackConfig() {
     config.devtool = 'source-map';
 
   config.output = {
-    //   // Absolute output directory
-    //   path: __dirname + '/dist',
-
-    //   // Output path from the view of the page
-    //   // Uses webpack-dev-server in development
-    //   publicPath: isProd ? '/neck/' : '/',
-
-    //   // Filename for entry points
-    //   // Only adds hash in build mode
+    // Filename for entry points
+    // Only adds hash in build mode
     filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
-
-    //   // Filename for non-entry points
-    //   // Only adds hash in build mode
-    //   chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js'
   };
 
   config.module = {
@@ -86,7 +75,6 @@ module.exports = function makeWebpackConfig() {
               name: 'assets/[name].[ext]',
           }
       },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {
         enforce: 'pre',
         test: /\.js$/,
@@ -114,25 +102,10 @@ module.exports = function makeWebpackConfig() {
 
   config.devServer = {
     contentBase: path.join(__dirname, './dist/'),
-    // // Serve index.html as the base
-    // contentBase: resolveAppPath('public'),
-    // // Enable compression
-    // compress: true,
-    // // Enable hot reloading
-    // hot: true,
     // // Public path is root of content base
     publicPath: '/',
     port: 9000
   };
-
-  // When importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // This is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  // config.externals = {
-  //   "react": "React",
-  //   "react-dom": "ReactDOM"
-  // };
 
   return config;
 }();

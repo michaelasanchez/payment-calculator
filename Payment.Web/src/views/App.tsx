@@ -5,7 +5,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { LoanForm } from '.';
 import { MemoizedLoanCard, Navbar } from '../components';
 import { LoanRequest, LoanResult } from '../models';
-import { config } from '../shared';
+import { config, strings } from '../shared';
 
 const DefaultLoanRequest = () => ({
   principal: 10000,
@@ -30,8 +30,6 @@ export const App: React.FC<AppProps> = ({}) => {
   };
 
   const handleSubmitRequest = () => {
-    console.log(loanRequest);
-
     fetch(formRequestUrl(loanRequest), {
       method: 'POST',
     })
@@ -47,18 +45,24 @@ export const App: React.FC<AppProps> = ({}) => {
       <main>
         <Container>
           <Row>
-            <Col sm={12} md={6}>
-              <h5 className="mb-3">Enter your loan info below</h5>
+            <Col md={12} lg={6}>
+              <h4 className="mb-3">{strings.instructions}</h4>
               <LoanForm
                 loanRequest={loanRequest}
                 updateRequest={handleUpdateRequest}
                 submitRequest={handleSubmitRequest}
               />
             </Col>
-            <Col sm={12} md={6}>
-              {map(loanResults, (l, i) => (
-                <MemoizedLoanCard key={i} loan={l} />
-              ))}
+            <Col md={12} lg={6}>
+              {loanResults.length > 0 && <h4>{strings.results}</h4>}
+              <div className="result-container">
+                {map(loanResults, (l, i) => (
+                  <>
+                    <span className="font-weight-light text-muted">#{i}</span>
+                    <MemoizedLoanCard key={i} loan={l} />
+                  </>
+                ))}
+              </div>
             </Col>
           </Row>
         </Container>

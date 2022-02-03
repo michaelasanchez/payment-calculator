@@ -1,6 +1,7 @@
 import React = require('react');
 import { Button, Form } from 'react-bootstrap';
 import { LoanRequest } from '../models';
+import { strings } from '../shared/strings';
 
 interface LoanFormProps {
   loanRequest: LoanRequest;
@@ -15,7 +16,7 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
     <>
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label>Principal</Form.Label>
+          <Form.Label>{strings.forms.label.principal}</Form.Label>
           <Form.Control
             type="number"
             size="lg"
@@ -24,7 +25,7 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
               updateRequest({ principal: parseFloat(e.target.value) })
             }
           />
-          <Form.Text muted>Current or total loan amount</Form.Text>
+          <Form.Text muted>{strings.forms.helperText.principal}</Form.Text>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Annual Rate</Form.Label>
@@ -36,10 +37,10 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
               updateRequest({ annualRate: parseFloat(e.target.value) })
             }
           />
-          <Form.Text muted>Interest rate percentage</Form.Text>
+          <Form.Text muted>{strings.forms.helperText.annualRate}</Form.Text>
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Remaining Periods</Form.Label>
+          <Form.Label>{strings.forms.label.remainingPeriods}</Form.Label>
           <Form.Control
             type="number"
             size="lg"
@@ -49,11 +50,11 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
             }
           />
           <Form.Text muted>
-            Number of remaining payment periods (in months)
+            {strings.forms.helperText.remainingPeriods}
           </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Overpayment</Form.Label>
+          <Form.Label>{strings.forms.label.overpayment}</Form.Label>
           <Form.Control
             type="number"
             size="lg"
@@ -63,7 +64,7 @@ export const LoanForm: React.FC<LoanFormProps> = (props) => {
             }
           />
         </Form.Group>
-        <Button onClick={submitRequest}>Calculate</Button>
+        <Button size="lg" onClick={submitRequest}>Calculate</Button>
       </Form>
     </>
   );

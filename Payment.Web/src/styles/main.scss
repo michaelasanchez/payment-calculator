@@ -7,3 +7,14 @@ body,
 main {
   margin: 2rem 0;
 }
+
+.result-container:not(:empty) {
+  border: 1px solid var(--bs-gray-200);
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+/* Bootstrap Overrides */
+.text-muted {
+  color: var(--bs-gray-500) !important;
+}
