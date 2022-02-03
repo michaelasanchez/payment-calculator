@@ -43,16 +43,13 @@ export const App: React.FC<AppProps> = ({}) => {
       .then((data) => data.json())
       .then((result: LoanResult) => {
         setLoanResults([...loanResults, { ...result, resultNum: resultCount }]);
-        console.log(resultCount);
         setResultCount((c) => c + 1);
       })
       .catch(() => alert('Whoops! Something went wrong'));
   };
 
   const handleRemoveResult = (resultNum: number) => {
-    console.log('here', resultNum);
     const index = findIndex(loanResults, (l) => l.resultNum == resultNum);
-    console.log('INDEX', index);
 
     loanResults.splice(index, 1);
     setLoanResults([...loanResults]);
