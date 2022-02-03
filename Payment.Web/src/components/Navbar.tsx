@@ -7,7 +7,7 @@ export const Navbar: React.FunctionComponent<NavbarProps> = () => {
   return (
     <BSNavbar bg="dark" variant="dark">
       <Container>
-        <BSNavbar.Brand href="#">Navbar</BSNavbar.Brand>
+        <BSNavbar.Brand href="#">Payment Calculator</BSNavbar.Brand>
       </Container>
     </BSNavbar>
   );
