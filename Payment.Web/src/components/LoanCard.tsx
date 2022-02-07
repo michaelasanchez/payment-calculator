@@ -27,7 +27,7 @@ const LoanCard: React.FC<LoanCardProps> = (props) => {
               <span>{formatPercent(loan.rate)}</span>
             </div>
             <div className="card-line">
-              <strong>Annual Rate</strong>
+              <strong>Overpayment</strong>
               <span>{formatCurrency(loan.overpayment)}</span>
             </div>
           </Col>
