@@ -5,7 +5,7 @@ Payment Calculator is an app that allows you calculate the dollar amounts paid o
 ## Installation
 
 #### Web API
-Open PaymentCalculator.sln in Visual Studio and run with IIS Express. API is configured to run on port 7124 by default.
+Open PaymentCalculator.sln in **Visual Studio 2022** and run with IIS Express. API is configured to run on port 7124 by default.
 
 #### Front-End
 Run the following commands from the _Project.Web_ folder.
